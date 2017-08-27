@@ -22,5 +22,7 @@ namespace CourseApp.Models
 
         [Required]
         public DateTime EndDate { get; set; }
+
+        public List<Student> studentlist { get; set; }
     }
 }
