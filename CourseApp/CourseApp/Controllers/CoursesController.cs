@@ -3,12 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using CourseApp.Models;
 
 namespace CourseApp.Controllers
 {
     [Route("api/[controller]")]
     public class CoursesController : Controller
     {
+        private static List<Course> _courses;
+
+        public CoursesController()
+        {
+            if (_courses == null)
+            {
+                _courses = new List<Course>
+                {
+                    new Course
+                    {
+                        ID          = 1,
+                        Name        = "Web services",
+                        TemplateID  = "T-514-VEFT",
+                        StartDate   = DateTime.Now,
+                        EndDate     = DateTime.Now.AddMonths(3)
+                    }
+                };
+            }
+        }
         // GET api/courses
         [HttpGet]
         [Route("api/courses")]
