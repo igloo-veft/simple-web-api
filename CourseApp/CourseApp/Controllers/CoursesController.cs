@@ -145,9 +145,20 @@ namespace CourseApp.Controllers
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("api/courses/{id:int}")]
+        public IActionResult DeleteCourse(int id)
         {
+            var course = _courses.SingleOrDefault(x => x.ID == id);
+
+            if (course == null)
+            {
+                return NotFound("Could not find a course with that ID!");
+            }
+
+            _courses.Remove(course);
+
+            return StatusCode(204);
         }
     }
 }
