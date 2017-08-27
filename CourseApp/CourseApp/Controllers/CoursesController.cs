@@ -24,17 +24,52 @@ namespace CourseApp.Controllers
                         Name        = "Web services",
                         TemplateID  = "T-514-VEFT",
                         StartDate   = DateTime.Now,
-                        EndDate     = DateTime.Now.AddMonths(3)
+                        EndDate     = DateTime.Now.AddMonths(3),
+                        studentlist = new List<Student>
+                        {
+                            new Student
+                            {
+                                SSN     = 0506905549,
+                                Name    = "Rónald Dónaldsson"
+                            },
+                            new Student
+                            {
+                                SSN     = 0203930939,
+                                Name    = "Dóróthea Landkönnuður"
+                            }
+                        }
+                    },
+                    new Course
+                    {
+                        ID          = 2,
+                        Name        = "Programming 101",
+                        TemplateID  = "T-101-PROG",
+                        StartDate   = DateTime.Now,
+                        EndDate     = DateTime.Now.AddMonths(3),
+                        studentlist = new List<Student>
+                        {
+                            new Student
+                            {
+                                SSN     = 1010900099,
+                                Name    = "Denni Dæmalausi"
+                            },
+                            new Student
+                            {
+                                SSN     = "0090099999",
+                                Name    = "Mr Foreign Exchange Student"
+                            }
+                        }
                     }
                 };
             }
         }
+
         // GET api/courses
         [HttpGet]
         [Route("api/courses")]
         public IActionResult GetCourses()
         {
-            return Ok(new string[] { "value1", "value2" });
+            return Ok(_courses);
         }
 
         // GET api/values/5
