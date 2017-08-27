@@ -144,7 +144,7 @@ namespace CourseApp.Controllers
             return Ok(course);
         }
 
-        // DELETE api/values/5
+        // DELETE api/courses/5
         [HttpDelete]
         [Route("api/courses/{id:int}")]
         public IActionResult DeleteCourse(int id)
@@ -159,6 +159,28 @@ namespace CourseApp.Controllers
             _courses.Remove(course);
 
             return StatusCode(204);
+        }
+
+        // GET api/courses/1/students
+        [HttpGet]
+        [Route("api/courses/{id}/students")]
+        public IActionResult GetStudentList(int courseid)
+        {
+            // if the request is sent and there are no courses
+            if (_courses == null)
+            {
+                return NotFound("No courses!");
+            }
+
+            var studentlist = _courses.SingleOrDefault(x => x.ID == courseid).studentlist;
+
+            // if the list of students is empty
+            if (!studentlist.Any())
+            {
+                return NotFound("No students");
+            }
+
+            return Ok(studentlist);
         }
     }
 }
