@@ -80,7 +80,7 @@ namespace CourseApp.Controllers
 
         // GET api/courses/5
         [HttpGet]
-        [Route("api/courses/{id}")]
+        [Route("api/courses/{id:int}", Name = "GetCourseByID")]
         public IActionResult GetCourseByID(int id)
         {
             var course = _courses.SingleOrDefault(x => x.ID == id);
@@ -102,8 +102,22 @@ namespace CourseApp.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        [Route("api/courses")]
+        public IActionResult AddCourse([FromBody]Course course)
         {
+            if (course == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(412);
+            }
+
+            _courses.Add(course);
+
+            return CreatedAtRoute("GetCourseByID", new { id = course.ID }, course);
         }
 
         // PUT api/values/5
