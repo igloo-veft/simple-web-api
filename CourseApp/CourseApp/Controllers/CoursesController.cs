@@ -163,24 +163,29 @@ namespace CourseApp.Controllers
 
         // GET api/courses/1/students
         [HttpGet]
-        [Route("api/courses/{id}/students")]
+        [Route("api/courses/{courseid}/students")]
         public IActionResult GetStudentList(int courseid)
         {
             // if the request is sent and there are no courses
             if (_courses == null)
             {
-                return NotFound("No courses!");
+                return BadRequest("No courses!");
             }
 
-            var studentlist = _courses.SingleOrDefault(x => x.ID == courseid).studentlist;
+            var course = _courses.SingleOrDefault(x => x.ID == courseid);
+
+            if (course == null || course.ID != courseid)
+            {
+                return BadRequest();
+            }
 
             // if the list of students is empty
-            if (!studentlist.Any())
+            if (!course.studentlist.Any())
             {
                 return NotFound("No students");
             }
 
-            return Ok(studentlist);
+            return Ok(course.studentlist);
         }
     }
 }
