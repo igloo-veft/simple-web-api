@@ -163,7 +163,7 @@ namespace CourseApp.Controllers
 
         // GET api/courses/1/students
         [HttpGet]
-        [Route("api/courses/{courseid}/students")]
+        [Route("api/courses/{courseid:int}/students", Name = "GetStudentList")]
         public IActionResult GetStudentList(int courseid)
         {
             // if the request is sent and there are no courses
@@ -186,6 +186,32 @@ namespace CourseApp.Controllers
             }
 
             return Ok(course.studentlist);
+        }
+
+        // POST api/courses/1/students
+        [HttpPost]
+        [Route("api/courses/{id:int}/students")]
+        public IActionResult AddStudent(int id, [FromBody]Student student)
+        {
+            if (student == null)
+            {
+                return BadRequest();
+            }
+
+            if(id > _courses.Count || id < 0)
+            {
+                return NotFound("Could not find a course with that ID!");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(412);
+            }
+
+            var course = _courses.ElementAt(id - 1);
+            course.studentlist.Add(student);
+
+            return CreatedAtRoute("GetStudentList", new { courseid = course.ID }, course);
         }
     }
 }
