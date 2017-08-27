@@ -7,7 +7,8 @@ using CourseApp.Models;
 
 namespace CourseApp.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
+    // if the above is uncommented then the Route for GetCourses needs to be empty
     public class CoursesController : Controller
     {
         private static List<Course> _courses;
@@ -69,15 +70,33 @@ namespace CourseApp.Controllers
         [Route("api/courses")]
         public IActionResult GetCourses()
         {
+            if (_courses == null)
+            {
+                return NotFound();
+            }
+
             return Ok(_courses);
         }
 
         // GET api/courses/5
         [HttpGet]
-        [Route("{id}")]
+        [Route("api/courses/{id}")]
         public IActionResult GetCourseByID(int id)
         {
             var course = _courses.SingleOrDefault(x => x.ID == id);
+
+            // if you put in id 42 and there is no course with that ID then it should return NotFound
+            if (course == null)
+            {
+                return NotFound("Could not find a course with that ID!");
+            }
+
+            // if for some reason the IDs suddenly don't match
+            if (course.ID != id)
+            {
+                return BadRequest();
+            }
+
             return Ok(course);
         }
 
