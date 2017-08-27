@@ -100,7 +100,7 @@ namespace CourseApp.Controllers
             return Ok(course);
         }
 
-        // POST api/values
+        // POST api/courses
         [HttpPost]
         [Route("api/courses")]
         public IActionResult AddCourse([FromBody]Course course)
@@ -120,10 +120,28 @@ namespace CourseApp.Controllers
             return CreatedAtRoute("GetCourseByID", new { id = course.ID }, course);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        // PUT api/courses/5
+        [HttpPut]
+        [Route("api/courses/{id:int}")]
+        public IActionResult UpdateCourse(int id, [FromBody]Course course)
         {
+            if (course == null)
+            {
+                return NotFound("Could not find course with that ID!");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(412);
+            }
+
+            _courses.ElementAt(id - 1).ID = course.ID;
+            _courses.ElementAt(id - 1).Name = course.Name;
+            _courses.ElementAt(id - 1).TemplateID = course.TemplateID;
+            _courses.ElementAt(id - 1).StartDate = course.StartDate;
+            _courses.ElementAt(id - 1).EndDate = course.EndDate;
+
+            return Ok(course);
         }
 
         // DELETE api/values/5
