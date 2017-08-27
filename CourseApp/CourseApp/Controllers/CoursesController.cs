@@ -5,6 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CourseApp.Models;
 
+/**
+ * Created by
+ * Hreidar Olafur Arnarsson, hreidara14@ru.is
+ * and
+ * Maciej Sierzputowski, maciej15@ru.is
+ * 27 Aug 2017
+ * */
 namespace CourseApp.Controllers
 {
     //[Route("api/[controller]")]
