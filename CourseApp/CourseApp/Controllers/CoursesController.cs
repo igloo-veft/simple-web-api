@@ -72,11 +72,13 @@ namespace CourseApp.Controllers
             return Ok(_courses);
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET api/courses/5
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetCourseByID(int id)
         {
-            return "value";
+            var course = _courses.SingleOrDefault(x => x.ID == id);
+            return Ok(course);
         }
 
         // POST api/values
