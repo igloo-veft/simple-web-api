@@ -55,7 +55,7 @@ namespace CourseApp.Controllers
                             },
                             new Student
                             {
-                                SSN     = "0090099999",
+                                SSN     = 0090099999,
                                 Name    = "Mr Foreign Exchange Student"
                             }
                         }
